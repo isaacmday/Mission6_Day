@@ -12,23 +12,23 @@ namespace Mission6_Day.Controllers
             _context = instance;
         }
 
-        public IActionResult Index()
+        public IActionResult Index() // view for the home page
         {
             return View();
         }
 
-        public IActionResult GetToKnow()
+        public IActionResult GetToKnow() // view for Get to Know Joel
         {
             return View();
         }
 
-        [HttpGet]
+        [HttpGet] // get method for Movies.cshtml
         public IActionResult Movies()
         {
             return View();
         }
 
-        [HttpPost]
+        [HttpPost] // post method for Movies.cshtml
         public IActionResult Movies(App response) 
         {
             _context.Movies.Add(response);

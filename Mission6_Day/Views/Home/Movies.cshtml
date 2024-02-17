@@ -4,18 +4,19 @@
 }
 
 <style>
+    /*styling to align all the entries*/
     .form-group {
-        text-align: left;
+        text-align: left; 
         margin-left: auto;
         margin-right: auto;
-        max-width: 400px; /* Adjust the max-width as needed */
+        max-width: 400px; 
     }
 </style>
 
 <div class="text-center">
     <h1 class="display-4">Movie Entry</h1>
     <br /><br />
-    <form method="post" class="form-group">
+    <form method="post" class="form-group"> <!--form that will get the info for each record in the database-->
         <label asp-for="ID">ID:</label>
         <input asp-for="ID" />
         <br /><br />

@@ -2,6 +2,7 @@
 
 namespace Mission6_Day.Models
 {
+    // create the object that the database will store
     public class App
     {
         [Key]
