@@ -31,12 +31,15 @@ namespace Mission6_Day.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Edited")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("LentTo")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Notes")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Rating")
@@ -56,7 +59,7 @@ namespace Mission6_Day.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Movies");
+                    b.ToTable("Movies", (string)null);
                 });
 #pragma warning restore 612, 618
         }
