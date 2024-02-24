@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Mission6_Day.Models;
 using System.Diagnostics;
+using Mission6_Day.Migrations;
 
 namespace Mission6_Day.Controllers
 {
@@ -23,18 +24,70 @@ namespace Mission6_Day.Controllers
         }
 
         [HttpGet] // get method for Movies.cshtml
-        public IActionResult Movies()
+        public IActionResult AddMovies()
         {
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryId)
+                .ToList();
+            
             return View();
         }
 
         [HttpPost] // post method for Movies.cshtml
-        public IActionResult Movies(App response) 
+        public IActionResult AddMovies(App response) 
         {
-            _context.Movies.Add(response);
+            _context.Movies.Add(response); //add record to database
+            _context.SaveChanges(); //save changes
+
+            return View("Confirmation", response);
+        }
+
+        public IActionResult MovieList()
+        {
+            var movies = _context.Movies
+                .OrderBy(x => x.MovieId).ToList();
+
+            return View(movies);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var recordToEdit = _context.Movies
+                .Single(x => x.MovieId == id);
+            
+            ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryId)
+                .ToList();
+
+            return View("AddMovies", recordToEdit);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(App updatedInfo)
+        {
+            _context.Update(updatedInfo);
             _context.SaveChanges();
 
-            return View("Index");
+            return RedirectToAction("MovieList");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var recordToDelete = _context.Movies
+                .Single(x => x.MovieId == id);
+
+            return View(recordToDelete);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(App record)
+        {
+            _context.Movies.Remove(record);
+            _context.SaveChanges();
+
+            return RedirectToAction("MovieList");
         }
     }
 }
