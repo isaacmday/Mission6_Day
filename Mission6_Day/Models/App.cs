@@ -11,25 +11,26 @@ namespace Mission6_Day.Models
         public int MovieId { get; set; }
 
         [ForeignKey("Categories")]
+        [Required(ErrorMessage = "Please select a category")]
         public int? CategoryId { get; set; }
-        public Categories Categories { get; set; }
+        public Categories? Categories { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter the movie title")]
         public string Title { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please enter the year the movie was created")]
+        [Range(1888, int.MaxValue, ErrorMessage = "The year must be 1888 or higher")]
         public int Year { get; set; }
 
         public string? Director { get; set; }
 
-        [Required]
         public string? Rating { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please indicate whether the movie was edited or not")]
         public int Edited { get; set; }
         public string? LentTo { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Please indicate whether the movie was copied to Plex or not")]
         public int CopiedToPlex { get; set; }
         public string? Notes { get; set; }
     }

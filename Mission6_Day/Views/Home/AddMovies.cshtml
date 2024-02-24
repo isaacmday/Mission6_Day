@@ -18,8 +18,10 @@
     <br /><br />
     <form method="post" class="form-group"> <!--form that will get the info for each record in the database-->
         <input type="hidden" asp-for="MovieId"/>
+
         <label asp-for="CategoryId">Select a category:</label>
         <select asp-for="CategoryId">
+            <option value="">-</option>
             @foreach (Categories c in ViewBag.Categories)
             {
                 <option value="@c.CategoryId">@c.Category</option>
@@ -45,8 +47,8 @@
         <br /><br />
         <label asp-for="Edited">Edited?</label>
         <select asp-for="Edited">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="0">No</option>
+            <option value="1">Yes</option>
         </select>
         <br /><br />
         <label asp-for="LentTo">Lent To:</label>
@@ -54,13 +56,16 @@
         <br /><br />
         <label asp-for="CopiedToPlex">Copied to Plex?</label>
         <select asp-for="CopiedToPlex">
-            <option value="true">Yes</option>
-            <option value="false">No</option>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
         </select>
         <br /><br />
         <label asp-for="Notes">Notes:</label>
         <input asp-for="Notes" maxlength="25" />
         <br /><br />
+
         <button type="submit">Submit Movie</button>
+
+        <div asp-validation-summary="All"></div>
     </form>
 </div>

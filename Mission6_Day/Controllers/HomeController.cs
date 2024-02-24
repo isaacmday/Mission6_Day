@@ -30,21 +30,32 @@ namespace Mission6_Day.Controllers
                 .OrderBy(x => x.CategoryId)
                 .ToList();
             
-            return View();
+            return View("AddMovies", new App());
         }
 
         [HttpPost] // post method for Movies.cshtml
         public IActionResult AddMovies(App response) 
         {
-            _context.Movies.Add(response); //add record to database
-            _context.SaveChanges(); //save changes
+            if (ModelState.IsValid)
+            {
+                _context.Movies.Add(response); //add record to database
+                _context.SaveChanges(); //save changes
 
-            return View("Confirmation", response);
+                return View("Confirmation", response);
+            }
+            else
+            {
+                ViewBag.Categories = _context.Categories
+                .OrderBy(x => x.CategoryId)
+                .ToList();
+
+                return View(response);
+            }
         }
 
         public IActionResult MovieList()
         {
-            var movies = _context.Movies
+            var movies = _context.Movies //get all records from Movies table
                 .OrderBy(x => x.MovieId).ToList();
 
             return View(movies);
@@ -53,7 +64,7 @@ namespace Mission6_Day.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            var recordToEdit = _context.Movies
+            var recordToEdit = _context.Movies //get the record being edited
                 .Single(x => x.MovieId == id);
             
             ViewBag.Categories = _context.Categories
@@ -66,7 +77,7 @@ namespace Mission6_Day.Controllers
         [HttpPost]
         public IActionResult Edit(App updatedInfo)
         {
-            _context.Update(updatedInfo);
+            _context.Update(updatedInfo); //update database
             _context.SaveChanges();
 
             return RedirectToAction("MovieList");
@@ -75,7 +86,7 @@ namespace Mission6_Day.Controllers
         [HttpGet]
         public IActionResult Delete(int id)
         {
-            var recordToDelete = _context.Movies
+            var recordToDelete = _context.Movies //get record to delete
                 .Single(x => x.MovieId == id);
 
             return View(recordToDelete);
@@ -84,7 +95,7 @@ namespace Mission6_Day.Controllers
         [HttpPost]
         public IActionResult Delete(App record)
         {
-            _context.Movies.Remove(record);
+            _context.Movies.Remove(record); //delete record
             _context.SaveChanges();
 
             return RedirectToAction("MovieList");
